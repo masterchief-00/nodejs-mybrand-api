@@ -11,8 +11,8 @@ const app = express();
 // connect to db
 connectDB();
 
-app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/blogs", blog_routes);
 app.use("/query", query_routes);

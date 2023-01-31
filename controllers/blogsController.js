@@ -1,4 +1,5 @@
 import Blog from "../model/Blog.js";
+import cloudinaryUpload from "../config/cloudinaryUpload.js";
 
 export const getAllBlogs = async (req, res) => {
   const blogs = await Blog.find();
@@ -11,10 +12,16 @@ export const createNewBlog = async (req, res) => {
     !req?.body?.title ||
     !req?.body?.author ||
     !req?.body?.body ||
-    !req?.body?.date
+    !req?.body?.date ||
+    !req?.file
   ) {
     return res.status(400).json({ message: "Invalid data" });
   }
+
+  let imagePath = req.file.path;
+
+  const uploaded_img = await cloudinaryUpload(imagePath);
+  
 
   try {
     const result = await Blog.create({
@@ -22,6 +29,7 @@ export const createNewBlog = async (req, res) => {
       body: req.body.body,
       author: req.body.author,
       date: req.body.date,
+      image: uploaded_img.url,
     });
 
     res.status(201).json(result);

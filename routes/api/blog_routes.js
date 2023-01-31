@@ -4,12 +4,15 @@ import {
   createNewBlog,
   updateBlog,
   findBlog,
-  deleteBlog
+  deleteBlog,
 } from "../../controllers/blogsController.js";
+import multer from "multer";
+
+const upload = multer({ dest: "uploads/" });
 
 const router = express.Router();
 
-router.route("/").get(getAllBlogs).post(createNewBlog);
+router.route("/").get(getAllBlogs).post(upload.single("image"),createNewBlog);
 
 router.route("/:id").put(updateBlog).get(findBlog).delete(deleteBlog);
 
