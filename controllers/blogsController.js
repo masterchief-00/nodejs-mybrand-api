@@ -21,7 +21,6 @@ export const createNewBlog = async (req, res) => {
   let imagePath = req.file.path;
 
   const uploaded_img = await cloudinaryUpload(imagePath);
-  
 
   try {
     const result = await Blog.create({
@@ -49,6 +48,12 @@ export const updateBlog = async (req, res) => {
   if (req?.body?.title) blog.title = req.body.title;
   if (req?.body?.author) blog.author = req.body.author;
   if (req?.body?.body) blog.body = req.body.body;
+  if (req?.file) {
+    let imagePath = req.file.path;
+    console.log(imagePath);
+    const uploaded_img = await cloudinaryUpload(imagePath);
+    blog.image = uploaded_img.url;
+  }
 
   const result = await blog.save();
   res.json(result);
