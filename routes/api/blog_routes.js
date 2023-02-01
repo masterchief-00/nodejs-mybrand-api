@@ -1,5 +1,5 @@
 import express from "express";
-import validate from "../../config/validationMiddleWare.js";
+import validate from "../../middleware/validationMiddleWare.js";
 import { blog_schema } from "../../config/validation.js";
 
 import {
@@ -10,6 +10,7 @@ import {
   deleteBlog,
 } from "../../controllers/blogsController.js";
 import multer from "multer";
+import verifyUserToken from "../../middleware/authVerifyMiddleWare.js";
 
 const upload = multer({ dest: "uploads/" });
 
@@ -18,12 +19,18 @@ const router = express.Router();
 router
   .route("/")
   .get(getAllBlogs)
-  .post([upload.single("image"), validate(blog_schema)], createNewBlog);
+  .post(
+    [verifyUserToken, upload.single("image"), validate(blog_schema)],
+    createNewBlog
+  );
 
 router
   .route("/:id")
-  .put([upload.single("image"), validate(blog_schema)], updateBlog)
+  .put(
+    [verifyUserToken, upload.single("image"), validate(blog_schema)],
+    updateBlog
+  )
   .get(findBlog)
-  .delete(deleteBlog);
+  .delete(verifyUserToken, deleteBlog);
 
 export default router;

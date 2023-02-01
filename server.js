@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import connectDB from "./config/connectDB.js";
 import blog_routes from "./routes/api/blog_routes.js";
 import query_routes from "./routes/api/queries_routes.js";
+import user_routes from "./routes/api/user_routes.js";
 
 const app = express();
 
@@ -14,6 +15,7 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/user", user_routes);
 app.use("/blogs", blog_routes);
 app.use("/query", query_routes);
 

@@ -10,7 +10,6 @@ export const getAllBlogs = async (req, res) => {
 export const createNewBlog = async (req, res) => {
   if (
     !req?.body?.title ||
-    !req?.body?.author ||
     !req?.body?.body ||
     !req?.body?.date ||
     !req?.file
@@ -26,7 +25,7 @@ export const createNewBlog = async (req, res) => {
     const result = await Blog.create({
       title: req.body.title,
       body: req.body.body,
-      author: req.body.author,
+      author: req.user.names,
       date: req.body.date,
       image: uploaded_img.url,
     });
