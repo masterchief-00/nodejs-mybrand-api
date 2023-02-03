@@ -12,7 +12,7 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(getAllQueries)
+  .get(verifyUserToken, getAllQueries)
   .post(validate(query_schema), createNewQuery);
 
 router.route("/:id").delete(verifyUserToken, deleteQuery);

@@ -29,5 +29,6 @@ export const query_schema = Joi.object().keys({
     tlds: { allow: ["com", "net"] },
   }),
   body: Joi.string().min(5).required(),
+  date: Joi.string().required(),
 });
 export default { person_schema, login_schema, blog_schema, query_schema };

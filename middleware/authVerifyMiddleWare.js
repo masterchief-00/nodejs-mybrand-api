@@ -14,7 +14,7 @@ export const verifyUserToken = (req, res, next) => {
     req.user = decoded.userInfo;
     next();
   } catch (err) {
-    res.status(400).send("invalid token");
+    res.status(400).json({ message: "invalid token" });
   }
 };
 

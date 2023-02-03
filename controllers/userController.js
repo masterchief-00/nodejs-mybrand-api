@@ -3,16 +3,12 @@ import bcrypt from "bcrypt";
 import User from "../model/User.js";
 import jwt from "jsonwebtoken";
 
-export const handleSignup = async (req, res) => {
-  const duplicate = await User.findOne({ email: req.body.email }).exec();
-  if (duplicate)
-    return res.status(409).json({ message: "User already exists" });
-
+export const handleSignup_simple = async (req, res) => {
   try {
-    const hashedPwd = await bcrypt.hash(req.body.password, 10);
+    const hashedPwd = await bcrypt.hash(req.user.password, 10);
     const result = await User.create({
-      names: req.body.names,
-      email: req.body.email,
+      names: req.user.names,
+      email: req.user.email,
       password: hashedPwd,
       token: "",
     });
@@ -24,38 +20,31 @@ export const handleSignup = async (req, res) => {
   }
 };
 
-export const handleLogin = async (req, res) => {
-  const foundUser = await User.findOne({ email: req.body.email });
-  if (!foundUser) return res.status(400).json({ message: "User not found" });
-
-  let match = await bcrypt.compare(req.body.password, foundUser.password);
-  if (match) {
-    const token = jwt.sign(
-      {
-        userInfo: {
-          names: foundUser.names,
-          email: foundUser.email,
-        },
+export const handleLogin_simple = async (req, res) => {
+  const token = jwt.sign(
+    {
+      userInfo: {
+        names: req.user.names,
+        email: req.user.email,
       },
-      process.env.JWT_SEKRET,
-      { expiresIn: "1h" }
-    );
+    },
+    process.env.JWT_SEKRET,
+    { expiresIn: "1h" }
+  );
+  let foundUser = req.user;
+  foundUser.token = token;
+  let result = await foundUser.save();
 
-    foundUser.token = token;
-    let result = await foundUser.save();
-
-    // Creates Secure Cookie with refresh token
-    res.cookie("jwt", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "None",
-      maxAge: 60 * 60 * 1000,
-    });
-    return res.json(result);
-  }
-
-  res.status(400).json({ message: "invalid credentials" });
+  // Creates Secure Cookie with refresh token
+  res.cookie("jwt", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+    maxAge: 60 * 60 * 1000,
+  });
+  return res.json(result);
 };
+
 export const handleLogout = async (req, res) => {
   const currentUser = await User.findOne({ email: req.user.email });
 
@@ -73,4 +62,9 @@ export const getUsers = async (req, res) => {
 
   res.json(users);
 };
-export default { handleSignup, handleLogin, getUsers, handleLogout };
+export default {
+  getUsers,
+  handleLogout,
+  handleLogin_simple,
+  handleSignup_simple,
+};
