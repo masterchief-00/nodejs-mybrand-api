@@ -8,8 +8,7 @@ export const getAllQueries = async (req, res) => {
 };
 
 export const createNewQuery = async (req, res) => {
-  if (!req?.body?.names || !req?.body?.email || !req?.body?.body)
-    return res.status(400).json({ message: "Invalid query" });
+  
   try {
     const result = await Query.create({
       names: req.body.names,

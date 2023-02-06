@@ -13,7 +13,7 @@ export const handleSignup_simple = async (req, res) => {
       token: "",
     });
 
-    res.json(result);
+    res.json({ message: "user registered" });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err.message });

@@ -8,15 +8,7 @@ export const getAllBlogs = async (req, res) => {
 };
 
 export const createNewBlog = async (req, res) => {
-  if (
-    !req?.body?.title ||
-    !req?.body?.body ||
-    !req?.body?.date ||
-    !req?.file
-  ) {
-    return res.status(400).json({ message: "Invalid data" });
-  }
-
+  
   let imagePath = req.file.path;
 
   const uploaded_img = await cloudinaryUpload(imagePath);

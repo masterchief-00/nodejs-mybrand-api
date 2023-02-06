@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import * as cloudinary from "cloudinary";
-import fs from "fs";
+import fs from "fs"; //for temporary file storage before cloudinary upload, check line 30 & 39
 
 // Cloudinary configuration
 cloudinary.config({
