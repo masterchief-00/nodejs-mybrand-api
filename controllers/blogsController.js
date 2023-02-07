@@ -5,6 +5,21 @@ import cloudinaryUpload from "../config/cloudinaryUpload.js";
 export const getAllBlogs = async (req, res) => {
   const blogs = await Blog.find();
   if (!blogs) return res.status(204).json({ message: "No blogs found" });
+
+  let blogs_presentation = [];
+
+  for (const blog of blogs) {
+    let item = {
+      id: blog._id,
+      title: blog.title,
+      author: blog.author,
+      body: blog.body,
+      date: blog.date,
+      likes: blog.likes.length,
+    };
+    blogs_presentation.push(item);
+  }
+
   res.json(blogs);
 };
 
@@ -107,35 +122,10 @@ export const likeBlog = async (req, res) => {
   return res.json({ message: "Like removed" });
 };
 
-export const commentToBlog = async (req, res) => {
-  if (!req?.params?.id)
-    return res.status(400).json({ message: "The blog ID is required" });
-
-  const blog = await Blog.findOne({ _id: req.params.id });
-
-  if (!blog) return res.status(204).json({ message: "Blog not found" });
-
-  try {
-    let dateNow = new Date();
-    let newComment = {
-      blog_id: req.params.id,
-      names: req.user.names,
-      comment: req.body.comment,
-      date: dateNow.toISOString(),
-    };
-
-    let result = await Comment.create(newComment);
-    return res.json({ message: "comment posted" });
-  } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
-  }
-};
 export default {
   getAllBlogs,
   createNewBlog,
   updateBlog,
   findBlog,
   likeBlog,
-  commentToBlog,
 };
