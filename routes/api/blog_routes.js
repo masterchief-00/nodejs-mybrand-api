@@ -1,6 +1,6 @@
 import express from "express";
 import validate from "../../middleware/validationMiddleWare.js";
-import { blog_schema } from "../../config/validation.js";
+import { blog_schema, comment_schema } from "../../config/validation.js";
 
 import {
   getAllBlogs,
@@ -9,6 +9,7 @@ import {
   findBlog,
   deleteBlog,
   likeBlog,
+  commentToBlog,
 } from "../../controllers/blogsController.js";
 import multer from "multer";
 import verifyUserToken from "../../middleware/authVerifyMiddleWare.js";
@@ -35,5 +36,9 @@ router
   .delete(verifyUserToken, deleteBlog);
 
 router.route("/like/:id").get(verifyUserToken, likeBlog);
+
+router
+  .route("/comment/:id")
+  .post([verifyUserToken, validate(comment_schema)], commentToBlog);
 
 export default router;
