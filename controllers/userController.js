@@ -42,7 +42,7 @@ export const handleLogin_simple = async (req, res) => {
     sameSite: "None",
     maxAge: 60 * 60 * 1000,
   });
-  return res.json(result);
+  return res.json({ message: "login successful" });
 };
 
 export const handleLogout = async (req, res) => {

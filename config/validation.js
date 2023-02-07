@@ -4,7 +4,7 @@ export const person_schema = Joi.object().keys({
   names: Joi.string().min(3).max(40).required(),
   email: Joi.string().email({
     minDomainSegments: 2,
-    tlds: { allow: ["com", "net","ac.gov"] },
+    tlds: { allow: ["com", "net","rw"] },
   }),
   password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
   conf_password: Joi.ref("password"),

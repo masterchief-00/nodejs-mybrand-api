@@ -8,6 +8,7 @@ import {
   updateBlog,
   findBlog,
   deleteBlog,
+  likeBlog,
 } from "../../controllers/blogsController.js";
 import multer from "multer";
 import verifyUserToken from "../../middleware/authVerifyMiddleWare.js";
@@ -32,5 +33,7 @@ router
   )
   .get(findBlog)
   .delete(verifyUserToken, deleteBlog);
+
+router.route("/like/:id").get(verifyUserToken, likeBlog);
 
 export default router;

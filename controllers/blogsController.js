@@ -8,7 +8,6 @@ export const getAllBlogs = async (req, res) => {
 };
 
 export const createNewBlog = async (req, res) => {
-  
   let imagePath = req.file.path;
 
   const uploaded_img = await cloudinaryUpload(imagePath);
@@ -74,4 +73,36 @@ export const deleteBlog = async (req, res) => {
   const result = await Blog.deleteOne({ _id: req.params.id });
   res.json(result);
 };
-export default { getAllBlogs, createNewBlog, updateBlog, findBlog };
+
+export const likeBlog = async (req, res) => {
+  if (!req?.params?.id)
+    return res.status(400).json({ message: "The blog ID is required" });
+
+  const blog = await Blog.findOne({ _id: req.params.id });
+
+  if (!blog) return res.status(204).json({ message: "Blog not found" });
+
+  let dateNow = new Date();
+  let newLike = {
+    email: req.user.email,
+    date: dateNow.toISOString(),
+  };
+
+  let allLikes = [...blog.likes];
+  let likeExists = allLikes.find((like) => like.email === newLike.email);
+
+  if (!likeExists) {
+    blog.likes.push(newLike);
+    blog.save();
+    return res.json({ message: "Like registered" });
+  }
+
+  let index = allLikes.indexOf(likeExists[0]);
+  allLikes.splice(index, 1);
+
+  blog.likes = [];
+  blog.likes = [...allLikes];
+  blog.save();
+  return res.json({ message: "Like removed" });
+};
+export default { getAllBlogs, createNewBlog, updateBlog, findBlog, likeBlog };
