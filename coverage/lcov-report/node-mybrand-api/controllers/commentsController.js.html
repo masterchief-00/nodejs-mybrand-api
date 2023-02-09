@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.69% </span>
+                <span class="strong">69.23% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/13</span>
+                <span class='fraction'>9/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">8.33% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/12</span>
+                <span class='fraction'>9/12</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -96,24 +96,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -124,25 +124,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import Blog from "../model/Blog.js";
 import Comment from "../model/Comment.js";
 &nbsp;
-export const commentToBlog = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >  if (!req?.params?.id)</span>
+export const commentToBlog = async (req, res) =&gt; {
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!req?.params?.id)
 <span class="cstat-no" title="statement not covered" >    return res.status(400).json({ message: "The blog ID is required" });</span>
 &nbsp;
-  const blog = <span class="cstat-no" title="statement not covered" >await Blog.findOne({ _id: req.params.id });</span>
+  const blog = await Blog.findOne({ _id: req.params.id });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (!blog) <span class="cstat-no" title="statement not covered" >return res.status(204).json({ message: "Blog not found" });</span></span>
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!blog) <span class="cstat-no" title="statement not covered" >return res.status(204).json({ message: "Blog not found" });</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    let dateNow = <span class="cstat-no" title="statement not covered" >new Date();</span>
-    let newComment = <span class="cstat-no" title="statement not covered" >{</span>
+  try {
+    let dateNow = new Date();
+    let newComment = {
       blog_id: req.params.id,
       names: req.user.names,
       comment: req.body.comment,
       date: dateNow.toISOString(),
     };
 &nbsp;
-    let result = <span class="cstat-no" title="statement not covered" >await Comment.create(newComment);</span>
-<span class="cstat-no" title="statement not covered" >    return res.json({ message: "comment posted" });</span>
+    let result = await Comment.create(newComment);
+    return res.json({ message: "comment posted" });
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    console.log(error);</span>
 <span class="cstat-no" title="statement not covered" >    return res.sendStatus(400);</span>
@@ -157,7 +157,7 @@ export default { commentToBlog };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-02-09T13:51:33.084Z
+                at 2023-02-09T15:26:38.769Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
