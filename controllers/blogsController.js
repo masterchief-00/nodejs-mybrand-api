@@ -1,5 +1,4 @@
 import Blog from "../model/Blog.js";
-import Comment from "../model/Comment.js";
 import cloudinaryUpload from "../config/cloudinaryUpload.js";
 
 export const getAllBlogs = async (req, res) => {
@@ -24,9 +23,16 @@ export const getAllBlogs = async (req, res) => {
 };
 
 export const createNewBlog = async (req, res) => {
-  let imagePath = req.file.path;
+  // if (process.env.NODE_ENV) {
+  //   await Blog.deleteMany({}, (err) => {
+  //     if (err) console.log(err);
+  //   });
+  // }
+  let imagePath = !process.env.NODE_ENV ? req.file.path : "";
 
-  const uploaded_img = await cloudinaryUpload(imagePath);
+  const uploaded_img = !process.env.NODE_ENV
+    ? await cloudinaryUpload(imagePath)
+    : { url: "none" };
 
   try {
     const result = await Blog.create({

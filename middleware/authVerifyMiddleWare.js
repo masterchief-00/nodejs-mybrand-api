@@ -1,5 +1,6 @@
 import * as dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import areWeTestingWithJest from "../config/isJestRunning";
 
 export const verifyUserToken = (req, res, next) => {
   if (!req.headers.authorization)
