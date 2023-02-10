@@ -1,8 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "start": "node server",
-    "dev": "nodemon server",
+    "start": "node index",
+    "dev": "nodemon index",
     "test": "jest --coverage --detectOpenHandles",
     "test:ci": "jest --coverage",
     "pretest": "cross-env NODE_ENV=test"
