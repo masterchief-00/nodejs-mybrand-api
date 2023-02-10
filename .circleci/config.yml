@@ -9,7 +9,7 @@ orbs:
   # The Node.js orb contains a set of prepackaged CircleCI configuration you can utilize
   # Orbs reduce the amount of configuration required for common tasks.
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
-  node: circleci/node@5
+  node: circleci/node@5.1.0
   cypress: cypress-io/cypress@2.1.0
 
 jobs:
@@ -35,6 +35,7 @@ workflows:
   build_tests:
     jobs:
       - run_tests
+      - node/run
       - cypress/run:
           executor: "node-cypress"
           command: yarn run test:e2e --headless
