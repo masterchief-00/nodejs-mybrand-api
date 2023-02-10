@@ -4,7 +4,7 @@
     "start": "node server",
     "dev": "nodemon server",
     "test": "jest --coverage --detectOpenHandles",
-    "test:ci": "jest --coverage --reporter=lcov",    
+    "test:ci": "jest --coverage",
     "pretest": "cross-env NODE_ENV=test"
   },
   "dependencies": {
@@ -13,7 +13,6 @@
     "cloudinary": "^1.33.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "coveralls": "^3.1.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
@@ -22,7 +21,6 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.1",
     "multer": "^1.4.5-lts.1",
-    "nyc": "^15.1.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "save-dev": "^0.0.1-security"
