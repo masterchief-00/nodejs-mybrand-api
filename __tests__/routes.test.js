@@ -38,6 +38,17 @@ describe("TEST: authenticate user", () => {
   });
 });
 
+describe("TEST: Retrieve all users", () => {
+  it("Should return an array of all users", async () => {
+    const res = await request(app)
+      .get("/users")
+      .set("Authorization", `Bearer ${_TOKEN}`);
+
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.statusCode).toEqual(200);
+  });
+});
+
 describe("TEST: Blog create", () => {
   it("Should create a new blog", async () => {
     const dateNow = new Date();
@@ -51,6 +62,22 @@ describe("TEST: Blog create", () => {
       });
     blog_id = res.body._id;
     expect(res.statusCode).toEqual(201);
+  });
+});
+
+describe("TEST: Blog update", () => {
+  it("Should Update blog by ID", async () => {
+    const dateNow = new Date();
+
+    const res = await request(app)
+      .put(`/blogs/${blog_id}`)
+      .set("Authorization", `Bearer ${_TOKEN}`)
+      .send({
+        title: "A test blog title updated",
+        body: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum updated",
+        date: dateNow.toISOString(),
+      });
+    expect(res.statusCode).toEqual(200);
   });
 });
 

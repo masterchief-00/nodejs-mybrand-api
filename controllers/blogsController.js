@@ -61,9 +61,11 @@ export const updateBlog = async (req, res) => {
   if (req?.body?.author) blog.author = req.body.author;
   if (req?.body?.body) blog.body = req.body.body;
   if (req?.file) {
-    let imagePath = req.file.path;
+    let imagePath = !process.env.NODE_ENV ? req.file.path : "";
     console.log(imagePath);
-    const uploaded_img = await cloudinaryUpload(imagePath);
+    const uploaded_img = !process.env.NODE_ENV
+      ? await cloudinaryUpload(imagePath)
+      : { url: "none" };
     blog.image = uploaded_img.url;
   }
 

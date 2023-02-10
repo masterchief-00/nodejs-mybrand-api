@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.77% </span>
+                <span class="strong">68.05% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>38/72</span>
+                <span class='fraction'>49/72</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">31.25% </span>
+                <span class="strong">44.44% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>10/32</span>
+                <span class='fraction'>16/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/7</span>
+                <span class='fraction'>6/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.57% </span>
+                <span class="strong">71.21% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>38/66</span>
+                <span class='fraction'>47/66</span>
             </div>
         
             
@@ -200,7 +200,9 @@
 <a name='L135'></a><a href='#L135'>135</a>
 <a name='L136'></a><a href='#L136'>136</a>
 <a name='L137'></a><a href='#L137'>137</a>
-<a name='L138'></a><a href='#L138'>138</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -253,24 +255,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -389,25 +393,27 @@ export const createNewBlog = async (req, res) =&gt; {
   }
 };
 &nbsp;
-export const updateBlog = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >  if (!req?.params?.id)</span>
+export const updateBlog = async (req, res) =&gt; {
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!req?.params?.id)
 <span class="cstat-no" title="statement not covered" >    return res.status(400).json({ message: "Blog ID required" });</span>
-  const blog = <span class="cstat-no" title="statement not covered" >await Blog.findOne({ _id: req.params.id });</span>
+  const blog = await Blog.findOne({ _id: req.params.id });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (!blog)</span>
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!blog)
 <span class="cstat-no" title="statement not covered" >    return res.status(204).json({ message: "No blog matches the given ID" });</span>
-<span class="cstat-no" title="statement not covered" >  if (req?.body?.title) <span class="cstat-no" title="statement not covered" >blog.title = req.body.title;</span></span>
-<span class="cstat-no" title="statement not covered" >  if (req?.body?.author) <span class="cstat-no" title="statement not covered" >blog.author = req.body.author;</span></span>
-<span class="cstat-no" title="statement not covered" >  if (req?.body?.body) <span class="cstat-no" title="statement not covered" >blog.body = req.body.body;</span></span>
-<span class="cstat-no" title="statement not covered" >  if (req?.file) {</span>
-    let imagePath = <span class="cstat-no" title="statement not covered" >req.file.path;</span>
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (req?.body?.title) blog.title = req.body.title;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (req?.body?.author) <span class="cstat-no" title="statement not covered" >blog.author = req.body.author;</span>
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (req?.body?.body) blog.body = req.body.body;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (req?.file) {
+    let imagePath = <span class="cstat-no" title="statement not covered" >!process.env.NODE_ENV ? req.file.path : "";</span>
 <span class="cstat-no" title="statement not covered" >    console.log(imagePath);</span>
-    const uploaded_img = <span class="cstat-no" title="statement not covered" >await cloudinaryUpload(imagePath);</span>
+    const uploaded_img = <span class="cstat-no" title="statement not covered" >!process.env.NODE_ENV</span>
+      ? await cloudinaryUpload(imagePath)
+      : { url: "none" };
 <span class="cstat-no" title="statement not covered" >    blog.image = uploaded_img.url;</span>
   }
 &nbsp;
-  const result = <span class="cstat-no" title="statement not covered" >await blog.save();</span>
-<span class="cstat-no" title="statement not covered" >  res.json(result);</span>
+  const result = await blog.save();
+  res.json(result);
 };
 &nbsp;
 export const findBlog = async (req, res) =&gt; {
@@ -481,7 +487,7 @@ export default {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-02-10T10:57:51.307Z
+                at 2023-02-10T11:22:10.354Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
