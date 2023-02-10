@@ -4,6 +4,7 @@
     "start": "node server",
     "dev": "nodemon server",
     "test": "jest --coverage",
+    "test:ci":"jest --coverage",
     "pretest": "cross-env NODE_ENV=test"
   },
  

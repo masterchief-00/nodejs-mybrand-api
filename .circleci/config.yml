@@ -1,42 +1,37 @@
 version: 2.1
-
-executors:
-  node-cypress:
-    docker:
-      - image: "cypress/browsers:node16.14.0-chrome99-ff97"
-
 orbs:
-  # The Node.js orb contains a set of prepackaged CircleCI configuration you can utilize
-  # Orbs reduce the amount of configuration required for common tasks.
-  # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
-  node: circleci/node@5
-  cypress: cypress-io/cypress@2.1.0
+  node: circleci/node@4.7.0
 
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  run_tests:
+  build:
     docker:
-      - image: cimg/node:16.16
+      - image: 'circleci/node:16.16'
     steps:
       - checkout
-      - run:
-         name: Install npm dependecies
-         command: |
-           npm install --save
-      - run:
-          name: Run unit tests
-          command: |
-            npm test
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: test-results
+      - run: 
+          name: "npm install"
+          command: npm install
+      - run: 
+          name: "npm build"
+          command: npm run build
+  test:
+    docker:
+      - image: 'circleci/node:16.16'
+    steps:
+      - checkout
+      - run: 
+          name: "npm install"
+          command: npm install
+      - run: 
+          name: "npm test"
+          command: npm test
 
-workflows:
-  build_tests:
-    jobs:
-      - run_tests
-      - cypress/run:
-          executor: "node-cypress"
-          command: yarn run test:e2e --headless
-          yarn: true
-      
+  workflows:
+    build_and_test:
+      jobs:
+        - build
+        - test:
+            requires:
+              - build
