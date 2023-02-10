@@ -4,11 +4,7 @@ import User from "../model/User.js";
 import jwt from "jsonwebtoken";
 
 export const handleSignup_simple = async (req, res) => {
-  // if (process.env.NODE_ENV) {
-  //   await User.deleteMany({}, (err) => {
-  //     if (err) console.log(err);
-  //   });
-  // }
+ 
   try {
     const hashedPwd = await bcrypt.hash(req.user.password, 10);
     const result = await User.create({

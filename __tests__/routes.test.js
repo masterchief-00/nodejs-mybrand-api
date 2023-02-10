@@ -3,6 +3,7 @@ import app from "../server.js";
 import User from "../model/User.js";
 import Blog from "../model/Blog.js";
 import Query from "../model/Query.js";
+import Comment from "../model/Comment.js";
 
 let _TOKEN = "";
 let blog_id = "";
@@ -137,5 +138,6 @@ describe("TEST: log the user out", () => {
     await User.deleteMany({});
     await Blog.deleteMany({});
     await Query.deleteMany({});
+    await Comment.deleteMany({});
   });
 });
