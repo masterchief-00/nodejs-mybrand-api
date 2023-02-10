@@ -28,8 +28,15 @@ jobs:
           command: npm test
       - run: # run code coverage report
           name: code-coverage
-          command: npm run coverage
+          command: npm coverage
       - coveralls/upload
+      - store_artifacts: # special step to save test results as as artifact
+          # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: test-results
+      - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: coverage
+      - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: test-results
 
 workflows:
   build_and_test:
