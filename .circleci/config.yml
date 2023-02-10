@@ -7,7 +7,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: "circleci/node:18.14.0"
+      - image: cimg/node:19.6.0
     steps:
       - checkout
       - run:
@@ -18,7 +18,7 @@ jobs:
           command: npm run build
   test:
     docker:
-      - image: "circleci/node:18.14.0"
+      - image: cimg/node:19.6.0
     steps:
       - checkout
       - run:
