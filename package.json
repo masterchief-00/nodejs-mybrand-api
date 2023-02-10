@@ -4,16 +4,17 @@
     "start": "node server",
     "dev": "nodemon server",
     "test": "jest --coverage --detectOpenHandles",
-    "test:ci":"jest --coverage",
+    "test:ci": "jest --coverage",
     "pretest": "cross-env NODE_ENV=test"
   },
- 
+  "coverage": "nyc report --reporter=text-lcov | coveralls",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
     "cloudinary": "^1.33.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "coveralls": "^3.1.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
