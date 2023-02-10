@@ -1,8 +1,21 @@
 version: 2.1
+
+executors:
+  node-cypress:
+    docker:
+      - image: "cypress/browsers:node16.14.0-chrome99-ff97"
+
+orbs:
+  # The Node.js orb contains a set of prepackaged CircleCI configuration you can utilize
+  # Orbs reduce the amount of configuration required for common tasks.
+  # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
+  node: circleci/node@5
+  cypress: cypress-io/cypress@2.1.0
+
 jobs:
   run_tests:
     docker:
-      - image: circleci/node@4.7
+      - image: cimg/node:16.16
     steps:
       - checkout
       - run:
@@ -22,4 +35,8 @@ workflows:
   build_tests:
     jobs:
       - run_tests
+      - cypress/run:
+          executor: "node-cypress"
+          command: yarn run test:e2e --headless
+          yarn: true
       
