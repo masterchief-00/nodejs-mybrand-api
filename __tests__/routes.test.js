@@ -4,6 +4,7 @@ import User from "../model/User.js";
 import Blog from "../model/Blog.js";
 import Query from "../model/Query.js";
 import Comment from "../model/Comment.js";
+import mongoose from "mongoose";
 
 let _TOKEN = "";
 let blog_id = "";
@@ -139,5 +140,6 @@ describe("TEST: log the user out", () => {
     await Blog.deleteMany({});
     await Query.deleteMany({});
     await Comment.deleteMany({});
+    await mongoose.connection.close();
   });
 });

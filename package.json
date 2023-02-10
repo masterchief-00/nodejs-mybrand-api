@@ -3,7 +3,7 @@
   "scripts": {
     "start": "node server",
     "dev": "nodemon server",
-    "test": "jest --coverage",
+    "test": "jest --coverage --detectOpenHandles",
     "test:ci":"jest --coverage",
     "pretest": "cross-env NODE_ENV=test"
   },
