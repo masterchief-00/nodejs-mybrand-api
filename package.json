@@ -5,9 +5,9 @@
     "dev": "nodemon server",
     "test": "jest --coverage --detectOpenHandles",
     "test:ci": "jest --coverage",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "pretest": "cross-env NODE_ENV=test"
   },
-  "coverage": "nyc report --reporter=text-lcov | coveralls",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
