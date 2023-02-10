@@ -1,7 +1,12 @@
 import request from "supertest";
 import app from "../server.js";
+import User from "../model/User.js";
+import Blog from "../model/Blog.js";
+import Query from "../model/Query.js";
 
 let _TOKEN = "";
+let blog_id = "";
+let query_id = "";
 
 describe("TEST: Register User", () => {
   beforeEach(() => {
@@ -42,7 +47,7 @@ describe("TEST: Blog create", () => {
         body: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
         date: dateNow.toISOString(),
       });
-
+    blog_id = res.body._id;
     expect(res.statusCode).toEqual(201);
   });
 });
@@ -58,7 +63,7 @@ describe("TEST: Blog retrival", () => {
 
 describe("TEST: Single blog retrival", () => {
   it("Should retrive one blog by ID", async () => {
-    const res = await request(app).get("/blogs/63e4f9b4efcbdb481745b8d1");
+    const res = await request(app).get(`/blogs/${blog_id}`);
     expect(res.body).not.toEqual("");
     expect(res.statusCode).toEqual(200);
   });
@@ -67,7 +72,7 @@ describe("TEST: Single blog retrival", () => {
 describe("TEST: Blog likes", () => {
   it("Should register a like to a blog by ID", async () => {
     const res = await request(app)
-      .get("/blogs/63e4f9b4efcbdb481745b8d1/likes")
+      .get(`/blogs/${blog_id}/likes`)
       .set("Authorization", `Bearer ${_TOKEN}`);
 
     expect(res.statusCode).toEqual(200);
@@ -77,7 +82,7 @@ describe("TEST: Blog likes", () => {
 describe("TEST: Blog commenting", () => {
   it("Should create a comment to a blog by ID", async () => {
     const res = await request(app)
-      .post("/blogs/63e4f9b4efcbdb481745b8d1/comments")
+      .post(`/blogs/${blog_id}/comments`)
       .set("Authorization", `Bearer ${_TOKEN}`)
       .send({
         comment: "oh I agree!",
@@ -90,7 +95,7 @@ describe("TEST: Blog commenting", () => {
 describe("TEST: Blog deletion", () => {
   it("Should delete blog by ID", async () => {
     const res = await request(app)
-      .delete("/blogs/63e4fa643bbc5f0036e0cd6f")
+      .delete(`/blogs/${blog_id}`)
       .set("Authorization", `Bearer ${_TOKEN}`);
     expect(res.statusCode).toEqual(200);
   });
@@ -106,6 +111,7 @@ describe("TEST: Query sending", () => {
       body: "Great stuff",
       date: dateNow.toISOString(),
     });
+    query_id = res.body._id;
     expect(res.statusCode).toEqual(200);
   });
 });
@@ -113,7 +119,7 @@ describe("TEST: Query sending", () => {
 describe("TEST: Query deletion", () => {
   it("Should delete query by ID", async () => {
     const res = await request(app)
-      .delete("/queries/63e50ec6d413af35d33460bb")
+      .delete(`/queries/${query_id}`)
       .set("Authorization", `Bearer ${_TOKEN}`);
     expect(res.statusCode).toEqual(200);
   });
@@ -125,5 +131,11 @@ describe("TEST: log the user out", () => {
       .get("/users/logout")
       .set("Authorization", `Bearer ${_TOKEN}`);
     expect(res.statusCode).toEqual(200);
+  });
+
+  afterEach(async () => {
+    await User.deleteMany({});
+    await Blog.deleteMany({});
+    await Query.deleteMany({});
   });
 });
