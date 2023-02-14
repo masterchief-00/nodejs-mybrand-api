@@ -18,6 +18,132 @@ const upload = multer({ dest: "uploads/" });
 
 const router = express.Router();
 
+/**
+ * @openapi
+ *  components:
+ *      schemas:
+ *          Blog:
+ *              type: object
+ *              properties:
+ *                  title:
+ *                    type: string
+ *                  body:
+ *                    type: string
+ *                  image :
+ *                    type: string
+ *                    format: binary
+ */
+
+/**
+ * @openapi
+ * '/blogs':
+ *  get:
+ *     tags:
+ *     - Blogs
+ *     summary: Get all blogs
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *          application/json:
+ *            type: array
+ *            items:
+ *              type: object
+ *              properties:
+ *                title:
+ *                  type: string
+ *                body:
+ *                  type: string
+ *                image:
+ *                  type: string
+ *                author:
+ *                  type: string
+ *                date:
+ *                  type: string
+ *                _id:
+ *                  type: string
+ *                __v:
+ *                  type: number
+ *       400:
+ *         description: Bad request
+ */
+
+/**
+ * @openapi
+ * '/blogs':
+ *  post:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *     - Blogs
+ *     summary: create a new blog
+ *     requestBody:
+ *       required: true
+ *       content:
+ *          multipart/form-data:
+ *           schema:
+ *             $ref: '#components/schemas/Blog'
+ *     responses:
+ *       201:
+ *         description: Success
+ *         content:
+ *          application/json:
+ *            type: array
+ *            items:
+ *              type: object
+ *              properties:
+ *                title:
+ *                  type: string
+ *                body:
+ *                  type: string
+ *                image:
+ *                  type: string                
+ *                _id:
+ *                  type: string
+ *                __v:
+ *                  type: number
+ *       400:
+ *         description: Bad request
+ */
+
+/**
+ * @openapi
+ * '/blogs':
+ *  post:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *     - Blogs
+ *     summary: create a new blog
+ *     requestBody:
+ *       required: true
+ *       content:
+ *          multipart/form-data:
+ *           schema:
+ *             $ref: '#components/schemas/Blog'
+ *     responses:
+ *       201:
+ *         description: Success
+ *         content:
+ *          application/json:
+ *            type: array
+ *            items:
+ *              type: object
+ *              properties:
+ *                title:
+ *                  type: string
+ *                body:
+ *                  type: string
+ *                image:
+ *                  type: string                
+ *                _id:
+ *                  type: string
+ *                __v:
+ *                  type: number
+ *       400:
+ *         description: Bad request
+ */
+
 router
   .route("/")
   .get(getAllBlogs)

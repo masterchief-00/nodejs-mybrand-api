@@ -41,6 +41,15 @@ router
  *                     type: string
  *                  token:
  *                     type: string
+ *          User:
+ *              type: object
+ *              properties:
+ *                 names:
+ *                    type: string
+ *                 email:
+ *                    type: string
+ *                 password:
+ *                    type: string
  */
 
 /**
@@ -48,7 +57,7 @@ router
  * '/users/login':
  *  post:
  *     tags:
- *     - Login
+ *     - User
  *     summary: Authenticate user
  *     requestBody:
  *       required: true
@@ -62,7 +71,69 @@ router
  *         content:
  *          application/json:
  *            schema:
- *              $ref: '#components/schemas/Auth_success'            
+ *              $ref: '#components/schemas/Auth_success'
+ *       400:
+ *         description: Bad request
+ */
+
+/**
+ * @openapi
+ * '/users/signup':
+ *  post:
+ *     tags:
+ *     - User
+ *     summary: register user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                   type: string
+ *       400:
+ *         description: Bad request
+ */
+
+
+/**
+ * @openapi
+ * '/users':
+ *  get:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *     - User
+ *     summary: Get all users
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *          application/json:
+ *            type: array
+ *            items:
+ *              type: object
+ *              properties:
+ *                names:
+ *                  type: string
+ *                email:
+ *                  type: string
+ *                password:
+ *                  type: string
+ *                token:
+ *                  type: string
+ *                _id:
+ *                  type: string
+ *                __v:
+ *                  type: number
  *       400:
  *         description: Bad request
  */

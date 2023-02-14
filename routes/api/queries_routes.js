@@ -37,13 +37,13 @@ const router = express.Router();
  *                    type: number
  *                  _id:
  *                    type: string
- *           Query_delete:
- *             type: object
- *             properties:
- *                 acknowledged:
- *                   type: boolean
- *                 deletedCount:
- *                   type: number
+ *          Query_delete:
+ *            type: object
+ *            properties:
+ *                acknowledged:
+ *                  type: boolean
+ *                deletedCount:
+ *                  type: number
  */
 
 /**
@@ -81,8 +81,6 @@ const router = express.Router();
  *     tags:
  *     - Queries
  *     summary: send a query
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
