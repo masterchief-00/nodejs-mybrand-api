@@ -4,6 +4,7 @@ import User from "../model/User.js";
 import jwt from "jsonwebtoken";
 
 export const handleSignup_simple = async (req, res) => {
+ 
   try {
     const hashedPwd = await bcrypt.hash(req.user.password, 10);
     const result = await User.create({
@@ -36,13 +37,14 @@ export const handleLogin_simple = async (req, res) => {
   let result = await foundUser.save();
 
   // Creates Secure Cookie with refresh token
-  res.cookie("jwt", token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "None",
-    maxAge: 60 * 60 * 1000,
-  });
-  return res.json(result);
+  // res.cookie("jwt", token, {
+  //   httpOnly: true,
+  //   secure: true,
+  //   sameSite: "None",
+  //   maxAge: 60 * 60 * 1000,
+  // });
+
+  return res.json({ message: "login successful", token: result.token });
 };
 
 export const handleLogout = async (req, res) => {

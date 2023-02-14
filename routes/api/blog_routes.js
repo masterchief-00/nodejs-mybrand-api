@@ -1,6 +1,6 @@
 import express from "express";
 import validate from "../../middleware/validationMiddleWare.js";
-import { blog_schema } from "../../config/validation.js";
+import { blog_schema, comment_schema } from "../../config/validation.js";
 
 import {
   getAllBlogs,
@@ -8,7 +8,9 @@ import {
   updateBlog,
   findBlog,
   deleteBlog,
+  likeBlog,
 } from "../../controllers/blogsController.js";
+import { commentToBlog } from "../../controllers/commentsController.js";
 import multer from "multer";
 import verifyUserToken from "../../middleware/authVerifyMiddleWare.js";
 
@@ -23,6 +25,12 @@ router
     [verifyUserToken, upload.single("image"), validate(blog_schema)],
     createNewBlog
   );
+
+router
+  .route("/:id/comments")
+  .post([verifyUserToken, validate(comment_schema)], commentToBlog);
+
+router.route("/:id/likes").get(verifyUserToken, likeBlog);
 
 router
   .route("/:id")
