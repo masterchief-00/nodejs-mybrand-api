@@ -18,7 +18,6 @@ export const login_schema = Joi.object().keys({
 export const blog_schema = Joi.object().keys({
   title: Joi.string().min(7).max(35).required(),
   //   image: Joi.required(),
-  date: Joi.string(),
   body: Joi.string().min(15).required(),
 });
 
@@ -29,7 +28,6 @@ export const query_schema = Joi.object().keys({
     tlds: { allow: ["com", "net"] },
   }),
   body: Joi.string().min(5).required(),
-  date: Joi.string().required(),
 });
 export const comment_schema = Joi.object().keys({
   comment: Joi.string().min(5).required(),

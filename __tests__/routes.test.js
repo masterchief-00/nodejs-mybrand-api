@@ -51,14 +51,12 @@ describe("TEST: Retrieve all users", () => {
 
 describe("TEST: Blog create", () => {
   it("Should create a new blog", async () => {
-    const dateNow = new Date();
     const res = await request(app)
       .post("/blogs")
       .set("Authorization", `Bearer ${_TOKEN}`)
       .send({
         title: "A test blog title",
         body: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-        date: dateNow.toISOString(),
       });
     blog_id = res.body._id;
     expect(res.statusCode).toEqual(201);
@@ -67,7 +65,6 @@ describe("TEST: Blog create", () => {
 
 describe("TEST: Blog update", () => {
   it("Should Update blog by ID", async () => {
-    const dateNow = new Date();
 
     const res = await request(app)
       .put(`/blogs/${blog_id}`)
@@ -75,7 +72,6 @@ describe("TEST: Blog update", () => {
       .send({
         title: "A test blog title updated",
         body: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum updated",
-        date: dateNow.toISOString(),
       });
     expect(res.statusCode).toEqual(200);
   });
@@ -132,13 +128,11 @@ describe("TEST: Blog deletion", () => {
 
 describe("TEST: Query sending", () => {
   it("Should send query", async () => {
-    const dateNow = new Date();
 
     const res = await request(app).post("/queries").send({
       names: "John Doe",
       email: "doe@gmail.com",
       body: "Great stuff",
-      date: dateNow.toISOString(),
     });
     query_id = res.body._id;
     expect(res.statusCode).toEqual(200);

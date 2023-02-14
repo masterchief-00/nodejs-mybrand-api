@@ -34,12 +34,14 @@ export const createNewBlog = async (req, res) => {
     ? await cloudinaryUpload(imagePath)
     : { url: "none" };
 
+  let dateNow = new Date();
+
   try {
     const result = await Blog.create({
       title: req.body.title,
       body: req.body.body,
       author: req.user.names,
-      date: req.body.date,
+      date: dateNow.toISOString(),
       image: uploaded_img.url,
     });
 

@@ -22,6 +22,52 @@ router
     ],
     handleSignup_simple
   );
+
+/**
+ * @openapi
+ *  components:
+ *      schemas:
+ *          Auth:
+ *              type: object
+ *              properties:
+ *                  email:
+ *                    type: string
+ *                  password:
+ *                    type: string
+ *          Auth_success:
+ *               type: object
+ *               properties:
+ *                  message:
+ *                     type: string
+ *                  token:
+ *                     type: string
+ */
+
+/**
+ * @openapi
+ * '/users/login':
+ *  post:
+ *     tags:
+ *     - Login
+ *     summary: Authenticate user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#components/schemas/Auth'
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#components/schemas/Auth_success'            
+ *       400:
+ *         description: Bad request
+ */
+
+
 router
   .route("/login")
   .post(

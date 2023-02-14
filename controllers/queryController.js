@@ -8,13 +8,13 @@ export const getAllQueries = async (req, res) => {
 };
 
 export const createNewQuery = async (req, res) => {
-  
+  let dateNow = new Date();
   try {
     const result = await Query.create({
       names: req.body.names,
       email: req.body.email,
       body: req.body.body,
-      date: req.body.date,
+      date: dateNow.toISOString(),
     });
 
     res.json(result);
