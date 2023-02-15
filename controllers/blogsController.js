@@ -28,7 +28,7 @@ export const createNewBlog = async (req, res) => {
   //     if (err) console.log(err);
   //   });
   // }
-  let imagePath = !process.env.NODE_ENV ? req.file.path : "";
+  let imagePath = !process.env.NODE_ENV==='test' ? req.file.path : "";
 
   const uploaded_img = !process.env.NODE_ENV
     ? await cloudinaryUpload(imagePath)
@@ -64,7 +64,7 @@ export const updateBlog = async (req, res) => {
   if (req?.body?.body) blog.body = req.body.body;
   if (req?.file) {
     let imagePath = !process.env.NODE_ENV ? req.file.path : "";
-    const uploaded_img = !process.env.NODE_ENV
+    const uploaded_img = !process.env.NODE_ENV==='test'
       ? await cloudinaryUpload(imagePath)
       : { url: "none" };
     blog.image = uploaded_img.url;
