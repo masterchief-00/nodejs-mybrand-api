@@ -32,6 +32,31 @@ const router = express.Router();
  *                  image :
  *                    type: string
  *                    format: binary
+ *          Blog_success:
+ *                 title:
+ *                   type: string
+ *                 body:
+ *                   type: string
+ *                 image :
+ *                   type: string
+ *                 author:
+ *                   type: string
+ *                 _id: 
+ *                   type: string
+ *                 __v:
+ *                   type: string
+ *          Blog_delete:
+ *                 type: object
+ *                 properties:
+ *                     acknowledged:
+ *                       type: boolean
+ *                     deletedCount:
+ *                       type: number
+ *          Comment:
+ *                 type: object
+ *                 properties:
+ *                     comment:
+ *                       type: string                 
  */
 
 /**
@@ -108,13 +133,19 @@ const router = express.Router();
 
 /**
  * @openapi
- * '/blogs':
- *  post:
+ * /blogs/{id}:
+ *  put:
  *     security:
  *       - bearerAuth: []
  *     tags:
  *     - Blogs
- *     summary: create a new blog
+ *     summary: update a blog
+ *     parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true 
  *     requestBody:
  *       required: true
  *       content:
@@ -125,9 +156,7 @@ const router = express.Router();
  *       201:
  *         description: Success
  *         content:
- *          application/json:
- *            type: array
- *            items:
+ *          application/json:           
  *              type: object
  *              properties:
  *                title:
@@ -140,6 +169,118 @@ const router = express.Router();
  *                  type: string
  *                __v:
  *                  type: number
+ *       400:
+ *         description: Bad request
+ */
+
+/**
+ * @openapi
+ * /blogs/{id}:
+ *  get:
+ *        tags:
+ *        - Blogs
+ *        summary: get a single blog
+ *        parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true
+ *        responses:
+ *          200:
+ *            description: Success
+ *            content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#components/schemas/Blog_success'
+ *          400:
+ *            description: Bad request
+ */
+
+/**
+ * @openapi
+ * /blogs/{id}:
+ *  delete:
+ *        security:
+ *           - bearerAuth: []
+ *        tags:
+ *        - Blogs
+ *        summary: delete a blog
+ *        parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true
+ *        responses:
+ *          200:
+ *            description: Success
+ *            content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#components/schemas/Blog_delete'
+ *          400:
+ *            description: Bad request
+ */
+
+/**
+ * @openapi
+ * /blogs/{id}/comments:
+ *  post:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *     - Comment & likes
+ *     summary: comment on a blog
+ *     parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true 
+ *     requestBody:
+ *       required: true
+ *       content:
+ *          application/json:
+ *           schema:
+ *             $ref: '#components/schemas/Comment'
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *          application/json:           
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string         
+ *       400:
+ *         description: Bad request
+ */
+
+/**
+ * @openapi
+ * /blogs/{id}/likes:
+ *  get:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *     - Comment & likes
+ *     summary: like a blog
+ *     parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true    
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *          application/json:           
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string         
  *       400:
  *         description: Bad request
  */
