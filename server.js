@@ -4,6 +4,8 @@ import express from "express";
 import session from "express-session";
 import connectDB from "./config/connectDB.js";
 import passport from "passport";
+import cors from "cors";
+import { corsOptions } from "./config/corsOptions.js";
 import * as config_file from "./config/passportConfig.js";
 import blog_routes from "./routes/api/blog_routes.js";
 import query_routes from "./routes/api/queries_routes.js";
@@ -21,6 +23,7 @@ app.use(
 // connect to db
 connectDB();
 
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
