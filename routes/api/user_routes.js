@@ -138,6 +138,29 @@ router
  *         description: Bad request
  */
 
+/**
+ * @openapi
+ * '/users/logout':
+ *  get:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *     - User
+ *     summary: log out the user
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *          application/json:
+ *            type: object
+ *            items:
+ *              properties:
+ *                message:
+ *                  type: string
+ *       400:
+ *         description: Bad request
+ */
+
 
 router
   .route("/login")

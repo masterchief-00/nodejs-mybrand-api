@@ -16,6 +16,10 @@ const commentSchema = mongoose.Schema({
     type: Date,
     required: true,
   },
+  likes: {
+    type: [{ email: String, date: Date }],
+    default: [],
+  },
 });
 
 const model = mongoose.model("Comment", commentSchema);

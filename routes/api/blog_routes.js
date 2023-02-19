@@ -10,7 +10,10 @@ import {
   deleteBlog,
   likeBlog,
 } from "../../controllers/blogsController.js";
-import { commentToBlog } from "../../controllers/commentsController.js";
+import {
+  commentToBlog,
+  getComments,
+} from "../../controllers/commentsController.js";
 import multer from "multer";
 import verifyUserToken from "../../middleware/authVerifyMiddleWare.js";
 
@@ -41,7 +44,7 @@ const router = express.Router();
  *                   type: string
  *                 author:
  *                   type: string
- *                 _id: 
+ *                 _id:
  *                   type: string
  *                 __v:
  *                   type: string
@@ -56,7 +59,7 @@ const router = express.Router();
  *                 type: object
  *                 properties:
  *                     comment:
- *                       type: string                 
+ *                       type: string
  */
 
 /**
@@ -122,7 +125,7 @@ const router = express.Router();
  *                body:
  *                  type: string
  *                image:
- *                  type: string                
+ *                  type: string
  *                _id:
  *                  type: string
  *                __v:
@@ -145,7 +148,7 @@ const router = express.Router();
  *            name: id
  *            schema:
  *              type: string
- *            required: true 
+ *            required: true
  *     requestBody:
  *       required: true
  *       content:
@@ -156,7 +159,7 @@ const router = express.Router();
  *       201:
  *         description: Success
  *         content:
- *          application/json:           
+ *          application/json:
  *              type: object
  *              properties:
  *                title:
@@ -164,7 +167,7 @@ const router = express.Router();
  *                body:
  *                  type: string
  *                image:
- *                  type: string                
+ *                  type: string
  *                _id:
  *                  type: string
  *                __v:
@@ -237,7 +240,7 @@ const router = express.Router();
  *            name: id
  *            schema:
  *              type: string
- *            required: true 
+ *            required: true
  *     requestBody:
  *       required: true
  *       content:
@@ -248,11 +251,49 @@ const router = express.Router();
  *       200:
  *         description: Success
  *         content:
- *          application/json:           
+ *          application/json:
  *              type: object
  *              properties:
  *                message:
- *                  type: string         
+ *                  type: string
+ *       400:
+ *         description: Bad request
+ */
+
+/**
+ * @openapi
+ * /blogs/{id}/comments:
+ *  get:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *     - Comment & likes
+ *     summary: get comments by blog id
+ *     parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *          application/json:
+ *            type: array
+ *            items:
+ *              type: object
+ *              properties:
+ *                blog_id:
+ *                  type: string
+ *                names:
+ *                  type: string
+ *                comment:
+ *                  type: string
+ *                date:
+ *                  type: string
+ *                _id:
+ *                  type: string
  *       400:
  *         description: Bad request
  */
@@ -271,16 +312,16 @@ const router = express.Router();
  *            name: id
  *            schema:
  *              type: string
- *            required: true    
+ *            required: true
  *     responses:
  *       200:
  *         description: Success
  *         content:
- *          application/json:           
+ *          application/json:
  *              type: object
  *              properties:
  *                message:
- *                  type: string         
+ *                  type: string
  *       400:
  *         description: Bad request
  */
@@ -295,7 +336,8 @@ router
 
 router
   .route("/:id/comments")
-  .post([verifyUserToken, validate(comment_schema)], commentToBlog);
+  .post([verifyUserToken, validate(comment_schema)], commentToBlog)
+  .get(verifyUserToken, getComments);
 
 router.route("/:id/likes").get(verifyUserToken, likeBlog);
 
