@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for node-mybrand-api/routes/api/user_routes.js</title>
+    <title>Code coverage report for node-mybrand-api/routes/api/comment_routes.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">node-mybrand-api/routes/api</a> user_routes.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">node-mybrand-api/routes/api</a> comment_routes.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -220,29 +220,7 @@
 <a name='L155'></a><a href='#L155'>155</a>
 <a name='L156'></a><a href='#L156'>156</a>
 <a name='L157'></a><a href='#L157'>157</a>
-<a name='L158'></a><a href='#L158'>158</a>
-<a name='L159'></a><a href='#L159'>159</a>
-<a name='L160'></a><a href='#L160'>160</a>
-<a name='L161'></a><a href='#L161'>161</a>
-<a name='L162'></a><a href='#L162'>162</a>
-<a name='L163'></a><a href='#L163'>163</a>
-<a name='L164'></a><a href='#L164'>164</a>
-<a name='L165'></a><a href='#L165'>165</a>
-<a name='L166'></a><a href='#L166'>166</a>
-<a name='L167'></a><a href='#L167'>167</a>
-<a name='L168'></a><a href='#L168'>168</a>
-<a name='L169'></a><a href='#L169'>169</a>
-<a name='L170'></a><a href='#L170'>170</a>
-<a name='L171'></a><a href='#L171'>171</a>
-<a name='L172'></a><a href='#L172'>172</a>
-<a name='L173'></a><a href='#L173'>173</a>
-<a name='L174'></a><a href='#L174'>174</a>
-<a name='L175'></a><a href='#L175'>175</a>
-<a name='L176'></a><a href='#L176'>176</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L158'></a><a href='#L158'>158</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -251,18 +229,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -404,130 +370,138 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import express from "express";
-import passport from "passport";
 import {
-  getUsers,
-  handleLogin_simple,
-  handleLogout,
-  handleSignup_simple,
-} from "../../controllers/userController.js";
-import { person_schema, login_schema } from "../../config/validation.js";
-import validate from "../../middleware/validationMiddleWare.js";
+  findComment,
+  getReplies,
+  likeComment,
+  replyToComment,
+} from "../../controllers/commentsController.js";
 import verifyUserToken from "../../middleware/authVerifyMiddleWare.js";
-&nbsp;
 const router = express.Router();
 &nbsp;
-router.route("/").get(verifyUserToken, getUsers);
-router
-  .route("/signup")
-  .post(
-    [
-      validate(person_schema),
-      passport.authenticate("local-signup", { session: false }),
-    ],
-    handleSignup_simple
-  );
-&nbsp;
 /**
  * @openapi
- *  components:
- *      schemas:
- *          Auth:
- *              type: object
- *              properties:
- *                  email:
- *                    type: string
- *                  password:
- *                    type: string
- *          Auth_success:
- *               type: object
- *               properties:
- *                  message:
- *                     type: string
- *                  token:
- *                     type: string
- *          User:
- *              type: object
- *              properties:
- *                 names:
- *                    type: string
- *                 email:
- *                    type: string
- *                 password:
- *                    type: string
- */
-&nbsp;
-/**
- * @openapi
- * '/users/login':
- *  post:
- *     tags:
- *     - User
- *     summary: Authenticate user
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#components/schemas/Auth'
- *     responses:
- *       200:
- *         description: Success
- *         content:
- *          application/json:
- *            schema:
- *              $ref: '#components/schemas/Auth_success'
- *       400:
- *         description: Bad request
- */
-&nbsp;
-/**
- * @openapi
- * '/users/signup':
- *  post:
- *     tags:
- *     - User
- *     summary: register user
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#components/schemas/User'
- *     responses:
- *       200:
- *         description: Success
- *         content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                message:
- *                   type: string
- *       400:
- *         description: Bad request
- */
-&nbsp;
-&nbsp;
-/**
- * @openapi
- * '/users':
+ * /comments/{id}/likes:
  *  get:
  *     security:
  *       - bearerAuth: []
  *     tags:
- *     - User
- *     summary: Get all users
+ *     - Comment &amp; likes
+ *     summary: like a comment
+ *     parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *          application/json:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *       400:
+ *         description: Bad request
+ */
+&nbsp;
+/**
+ * @openapi
+ * /comments/{id}:
+ *  get:
+ *        security:
+ *        - bearerAuth: []
+ *        tags:
+ *        - Comment &amp; likes
+ *        summary: get a single comment
+ *        parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true
+ *        responses:
+ *          200:
+ *            description: Success
+ *            content:
+ *             application/json:
+ *               type: object
+ *               properties:
+ *                   _id:
+ *                     type: string
+ *                   blog_id:
+ *                     type: string
+ *                   coment:
+ *                     type: string
+ *                   names:
+ *                     type: string
+ *                   date:
+ *                     type: string
+ *                   __v:
+ *                     type: number
+ *          400:
+ *            description: Bad request
+ */
+&nbsp;
+/**
+ * @openapi
+ * /comments/{id}/reply:
+ *  post:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *     - Comment &amp; likes
+ *     summary: reply on a comment
+ *     parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *          application/json:
+ *           schema:
+ *             $ref: '#components/schemas/Comment'
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *          application/json:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *       400:
+ *         description: Bad request
+ */
+&nbsp;
+/**
+ * @openapi
+ * /comments/{id}/replies:
+ *  get:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *     - Comment &amp; likes
+ *     summary: get replies by comment id
+ *     parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true
  *     responses:
  *       200:
  *         description: Success
@@ -537,56 +511,28 @@ router
  *            items:
  *              type: object
  *              properties:
+ *                blog_id:
+ *                  type: string
  *                names:
  *                  type: string
- *                email:
+ *                comment:
  *                  type: string
- *                password:
- *                  type: string
- *                token:
+ *                date:
  *                  type: string
  *                _id:
  *                  type: string
- *                __v:
- *                  type: number
  *       400:
  *         description: Bad request
  */
 &nbsp;
-/**
- * @openapi
- * '/users/logout':
- *  get:
- *     security:
- *       - bearerAuth: []
- *     tags:
- *     - User
- *     summary: log out the user
- *     responses:
- *       200:
- *         description: Success
- *         content:
- *          application/json:
- *            type: object
- *            items:
- *              properties:
- *                message:
- *                  type: string
- *       400:
- *         description: Bad request
- */
+router.route("/:id").get(verifyUserToken, findComment);
 &nbsp;
+router.route("/:id/replies").get(verifyUserToken, getReplies);
 &nbsp;
-router
-  .route("/login")
-  .post(
-    [
-      validate(login_schema),
-      passport.authenticate("local-login", { session: false }),
-    ],
-    handleLogin_simple
-  );
-router.route("/logout").get(verifyUserToken, handleLogout);
+router.route("/:id/reply").post(verifyUserToken, replyToComment);
+&nbsp;
+router.route("/:id/likes").get(verifyUserToken, likeComment);
+&nbsp;
 export default router;
 &nbsp;</pre></td></tr></table></pre>
 

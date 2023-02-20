@@ -19,7 +19,7 @@ export const commentToBlog = async (req, res) => {
     };
 
     let result = await Comment.create(newComment);
-    return res.json({ message: "comment posted" });
+    return res.json({ message: "comment posted", id: result._id });
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);

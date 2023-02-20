@@ -23,8 +23,6 @@ export const getAllBlogs = async (req, res) => {
 };
 
 export const createNewBlog = async (req, res) => {
-  console.log(req.file.path);
-
   let imagePath = process.env.NODE_ENV !== "test" ? req.file.path : "";
 
   const uploaded_img =
