@@ -19,7 +19,7 @@ export const blog_schema = Joi.object().keys({
   title: Joi.string().min(7).max(35).required(),
   //   image: Joi.required(),
   body: Joi.string().min(15).required(),
-  category: Joi.string().min(7).max(35).required(),
+  category: Joi.string().min(3).max(35).required(),
 });
 
 export const project_schema = Joi.object().keys({
