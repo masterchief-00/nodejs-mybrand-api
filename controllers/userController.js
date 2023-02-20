@@ -4,6 +4,10 @@ import User from "../model/User.js";
 import jwt from "jsonwebtoken";
 
 export const handleSignup_simple = async (req, res) => {
+  const userExists = await User.findOne({ email: req.body.email });
+
+  if (userExists) res.status(400).json({ message: "User already exists" });
+  
   try {
     const hashedPwd = await bcrypt.hash(req.user.password, 10);
     const result = await User.create({
