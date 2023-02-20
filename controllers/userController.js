@@ -67,7 +67,11 @@ export const handleLogout = async (req, res) => {
     sameSite: "none",
   });
 
-  res.clearCookie("user_details");
+  res.clearCookie("user_details", {
+    httpOnly: false,
+    secure: false,
+    sameSite: "none",
+  });
   res.json({ message: "Logged out" });
 };
 export const getUsers = async (req, res) => {

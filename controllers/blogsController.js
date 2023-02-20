@@ -23,16 +23,14 @@ export const getAllBlogs = async (req, res) => {
 };
 
 export const createNewBlog = async (req, res) => {
-  // if (process.env.NODE_ENV) {
-  //   await Blog.deleteMany({}, (err) => {
-  //     if (err) console.log(err);
-  //   });
-  // }
-  let imagePath = process.env.NODE_ENV!=='test' ? req.file.path : "";
+  console.log(req.file.path);
 
-  const uploaded_img = process.env.NODE_ENV!=='test'
-    ? await cloudinaryUpload(imagePath)
-    : { url: "none" };
+  let imagePath = process.env.NODE_ENV !== "test" ? req.file.path : "";
+
+  const uploaded_img =
+    process.env.NODE_ENV !== "test"
+      ? await cloudinaryUpload(imagePath)
+      : { url: "none" };
 
   let dateNow = new Date();
 
@@ -41,6 +39,7 @@ export const createNewBlog = async (req, res) => {
       title: req.body.title,
       body: req.body.body,
       author: req.user.names,
+      category: req.body.category,
       date: dateNow.toISOString(),
       image: uploaded_img.url,
     });
@@ -62,11 +61,13 @@ export const updateBlog = async (req, res) => {
   if (req?.body?.title) blog.title = req.body.title;
   if (req?.body?.author) blog.author = req.body.author;
   if (req?.body?.body) blog.body = req.body.body;
+  if (req?.body?.category) blog.category = req.body.category;
   if (req?.file) {
     let imagePath = !process.env.NODE_ENV ? req.file.path : "";
-    const uploaded_img = process.env.NODE_ENV!=='test'
-      ? await cloudinaryUpload(imagePath)
-      : { url: "none" };
+    const uploaded_img =
+      process.env.NODE_ENV !== "test"
+        ? await cloudinaryUpload(imagePath)
+        : { url: "none" };
     blog.image = uploaded_img.url;
   }
 
@@ -84,6 +85,19 @@ export const findBlog = async (req, res) => {
     return res.status(204).json({ message: "No blog matches the given ID" });
 
   res.json(blog);
+};
+
+export const findBlogByCategory = async (req, res) => {
+  if (!req?.params?.id)
+    return res.status(400).json({ message: "The blog ID is required" });
+
+  const blog = await Blog.findOne({ _id: req.params.id });
+  const similarBlogs = await Blog.find({ category: blog.category });
+
+  if (!blog)
+    return res.status(204).json({ message: "No blog matches the given ID" });
+
+  res.json(similarBlogs ? similarBlogs : []);
 };
 
 export const deleteBlog = async (req, res) => {
@@ -136,5 +150,6 @@ export default {
   createNewBlog,
   updateBlog,
   findBlog,
+  findBlogByCategory,
   likeBlog,
 };

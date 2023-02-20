@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import Blog from "../model/Blog.js";
 import Comment from "../model/Comment.js";
 

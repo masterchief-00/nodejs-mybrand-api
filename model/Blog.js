@@ -13,6 +13,10 @@ const blogSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  category: {
+    type: String,
+    required: true,
+  },
   author: {
     type: String,
     required: true,
@@ -21,6 +25,7 @@ const blogSchema = mongoose.Schema({
     type: Date,
     required: true,
   },
+
   likes: {
     type: [{ email: String, date: Date }],
     default: [],

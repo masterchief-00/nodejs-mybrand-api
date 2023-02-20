@@ -19,6 +19,14 @@ export const blog_schema = Joi.object().keys({
   title: Joi.string().min(7).max(35).required(),
   //   image: Joi.required(),
   body: Joi.string().min(15).required(),
+  category: Joi.string().min(7).max(35).required(),
+});
+
+export const project_schema = Joi.object().keys({
+  title: Joi.string().min(7).max(35).required(),
+  //   image: Joi.required(),
+  description: Joi.string().min(15).required(),
+  tools: Joi.string().min(7).max(35).required(),
 });
 
 export const query_schema = Joi.object().keys({
@@ -38,4 +46,5 @@ export default {
   blog_schema,
   query_schema,
   comment_schema,
+  project_schema
 };
