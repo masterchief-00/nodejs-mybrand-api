@@ -14,6 +14,7 @@ export const createNewQuery = async (req, res) => {
       names: req.body.names,
       email: req.body.email,
       body: req.body.body,
+      status: "UNREAD",
       date: dateNow.toISOString(),
     });
 
@@ -22,6 +23,20 @@ export const createNewQuery = async (req, res) => {
     console.log(err);
     res.status(204);
   }
+};
+
+export const markRead = async (req, res) => {
+  if (!req?.params?.id)
+    return res.status(400).json({ message: "Query ID required" });
+
+  const query = await Query.findOne({ _id: req.params.id });
+
+  if (!query) return res.status(400).json({ message: "Query not found" });
+
+  query.status = "READ";
+  const result = await query.save();
+
+  res.json(result);
 };
 
 export const deleteQuery = async (req, res) => {
@@ -33,4 +48,4 @@ export const deleteQuery = async (req, res) => {
   res.json(result);
 };
 
-export default { getAllQueries, createNewQuery, deleteQuery };
+export default { getAllQueries, createNewQuery, deleteQuery, markRead };

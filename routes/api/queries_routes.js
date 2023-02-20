@@ -3,6 +3,7 @@ import {
   getAllQueries,
   createNewQuery,
   deleteQuery,
+  markRead,
 } from "../../controllers/queryController.js";
 import validate from "../../middleware/validationMiddleWare.js";
 import { query_schema } from "../../config/validation.js";
@@ -100,6 +101,32 @@ const router = express.Router();
 
 /**
  * @openapi
+ * '/queries/{id}/status':
+ *  get:
+ *     security:
+ *          - bearerAuth: []
+ *     tags:
+ *     - Queries
+ *     summary: mark as read
+ *     parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#components/schemas/Query_success'
+ *       400:
+ *         description: Bad request
+ */
+
+/**
+ * @openapi
  * /queries/{id}:
  *  delete:
  *        tags:
@@ -127,6 +154,8 @@ router
   .route("/")
   .get(verifyUserToken, getAllQueries)
   .post(validate(query_schema), createNewQuery);
+
+router.route("/:id/status").get(verifyUserToken, markRead);
 
 router.route("/:id").delete(verifyUserToken, deleteQuery);
 export default router;

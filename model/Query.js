@@ -17,6 +17,10 @@ const QuerySchema = mongoose.Schema({
     type: Date,
     required: true,
   },
+  status: {
+    type: String,
+    required: true,
+  },
 });
 
 const model = mongoose.model("Query", QuerySchema);
