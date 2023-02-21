@@ -12,7 +12,7 @@ import validate from "../../middleware/validationMiddleWare.js";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "tmp/");
+    cb(null, "./");
   },
 
   filename: function (req, file, cb) {
