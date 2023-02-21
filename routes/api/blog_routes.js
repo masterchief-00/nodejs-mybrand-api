@@ -62,6 +62,8 @@ export default router;
  *                    type: string
  *                  body:
  *                    type: string
+ *                  category:
+ *                    type: string
  *                  image :
  *                    type: string
  *                    format: binary
@@ -112,6 +114,8 @@ export default router;
  *                  type: string
  *                body:
  *                  type: string
+ *                category:
+ *                    type: string
  *                image:
  *                  type: string
  *                author:

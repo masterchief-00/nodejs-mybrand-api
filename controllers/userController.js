@@ -7,7 +7,7 @@ export const handleSignup_simple = async (req, res) => {
   const userExists = await User.findOne({ email: req.body.email });
 
   if (userExists) res.status(400).json({ message: "User already exists" });
-  
+
   try {
     const hashedPwd = await bcrypt.hash(req.user.password, 10);
     const result = await User.create({
@@ -30,6 +30,7 @@ export const handleLogin_simple = async (req, res) => {
       userInfo: {
         names: req.user.names,
         email: req.user.email,
+        role: req.user.role,
       },
     },
     process.env.JWT_SEKRET,
@@ -53,6 +54,7 @@ export const handleLogin_simple = async (req, res) => {
     user: {
       names: foundUser.names,
       email: foundUser.email,
+      role: foundUser.role,
     },
   });
 };
