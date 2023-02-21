@@ -18,7 +18,7 @@ import {
 import multer from "multer";
 import verifyUserToken from "../../middleware/authVerifyMiddleWare.js";
 
-const upload = multer({ dest: "tmp/" });
+const upload = multer({ dest: "uploads/" });
 
 const router = express.Router();
 
